@@ -1,0 +1,421 @@
+{
+    "type": "page",
+    "title": "整机信息",
+    "body": {
+        "type": "crud",
+        "api": "get:/v1/api/machine_info?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "syncLocation": false,
+        "perPage": 10,
+        "filter": {
+            "title": "条件搜索",
+            "controls": [
+                {
+                    "type": "text",
+                    "name": "keywords",
+                    "label": "关键字"
+                }
+            ]
+        },
+        "headerToolbar": [
+            {
+                "type": "button",
+                "label": "刷新",
+                "level": "primary",
+                "actionType": "reload"
+            },
+            "bulkActions",
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "新增",
+                "icon": "fa fa-plus",
+                "primary": true,
+                "dialog": {
+                    "title": "新增整机",
+                    "size": "lg",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/machine_info",
+                        "controls": [
+                            {
+                                "type": "text",
+                                "name": "machineNumber",
+                                "label": "编号",
+                                "required": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "machineName",
+                                "label": "产品名称",
+                                "required": true
+                            },
+                            {
+                                "type": "select",
+                                "name": "warehouseName",
+                                "label": "仓库名称",
+                                "source": "/v1/api/get_name/warehouse_names",
+                                "required": true
+                            },
+                            {
+                                "type": "select",
+                                "name": "categoryName",
+                                "label": "分类",
+                                "source": "/v1/api/get_name/machine_category_names",
+                                "required": true
+                            },
+                            {
+                                "type": "combo",
+                                "name": "parts",
+                                "label": "所需零件",
+                                "multiple": true,
+                                "controls": [
+                                    {
+                                        "type": "select",
+                                        "name": "partName",
+                                        "label": "名称",
+                                        "source": "/v1/api/get_name/part_names",
+                                        "autoComplete": true
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "quantity",
+                                        "label": "数量"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "select",
+                                "name": "installation",
+                                "label": "安装方式",
+                                "source": "/v1/api/machine_info/installation_options"
+                            },
+                            {
+                                "type": "select",
+                                "name": "attributes",
+                                "label": "属性",
+                                "source": "/v1/api/machine_info/attribute_options"
+                            },
+                            {
+                                "type": "number",
+                                "name": "retailPrice",
+                                "label": "零售价",
+                                "step": 0.01
+                            },
+                            {
+                                "type": "textarea",
+                                "name": "remark",
+                                "label": "备注"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "手工入库",
+                "icon": "fa fa-arrow-circle-right",
+                "primary": true,
+                "dialog": {
+                    "title": "手工入库",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/machine_info/stock_in",
+                        "controls": [
+                            {
+                                "type": "select",
+                                "name": "machineName",
+                                "label": "整机名称",
+                                "source": "/v1/api/get_name/machine_names",
+                                "required": true,
+                                "autoComplete": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "quantity",
+                                "label": "入库数量",
+                                "required": true
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "报废",
+                "icon": "fa fa-trash",
+                "primary": true,
+                "dialog": {
+                    "title": "报废",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/machine_info/scrap",
+                        "controls": [
+                            {
+                                "type": "select",
+                                "name": "machineName",
+                                "label": "整机名称",
+                                "source": "/v1/api/get_name/machine_names",
+                                "required": true,
+                                "autoComplete": true
+                            },
+                            {
+                                "type": "number",
+                                "name": "quantity",
+                                "label": "报废数量",
+                                "required": true
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "columns": [
+            {
+                "name": "id",
+                "label": "序号",
+                "type": "text"
+            },
+            {
+                "name": "machineNumber",
+                "label": "编号",
+                "type": "text"
+            },
+            {
+                "name": "machineName",
+                "label": "产品名称",
+                "type": "text"
+            },
+            {
+                "name": "warehouseName",
+                "label": "仓库名称",
+                "type": "text"
+            },
+            {
+                "name": "categoryName",
+                "label": "分类",
+                "type": "text"
+            },
+            {
+                "name": "installation",
+                "label": "安装方式",
+                "type": "text"
+            },
+            {
+                "name": "attributes",
+                "label": "属性",
+                "type": "text"
+            },
+            {
+                "name": "retailPrice",
+                "label": "零售价",
+                "type": "text"
+            },
+            {
+                "name": "remark",
+                "label": "备注",
+                "type": "text"
+            },
+            {
+                "name": "quantity",
+                "label": "库存数量",
+                "type": "text"
+            },
+            {
+                "type": "operation",
+                "label": "操作",
+                "buttons": [
+                    {
+                        "type": "button",
+                        "icon": "fa fa-pencil",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "编辑",
+                            "size": "lg",
+                            "body": {
+                                "type": "form",
+                                "name": "editForm",
+                                "api": "put:/v1/api/machine_info/$id",
+                                "controls": [
+                                    {
+                                        "type": "text",
+                                        "name": "machineNumber",
+                                        "label": "编号",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "machineName",
+                                        "label": "产品名称",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "warehouseName",
+                                        "label": "仓库名称",
+                                        "source": "/v1/api/get_name/warehouse_names",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "categoryName",
+                                        "label": "分类",
+                                        "source": "/v1/api/get_name/machine_category_names",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "combo",
+                                        "name": "parts",
+                                        "label": "所需零件",
+                                        "multiple": true,
+                                        "controls": [
+                                            {
+                                                "type": "select",
+                                                "name": "partName",
+                                                "label": "零件名称",
+                                                "source": "/v1/api/get_name/part_names",
+                                                "autoComplete": true
+                                            },
+                                            {
+                                                "type": "number",
+                                                "name": "quantity",
+                                                "label": "数量"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "installation",
+                                        "label": "安装方式",
+                                        "source": "/v1/api/machine_info/installation_options"
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "attributes",
+                                        "label": "属性",
+                                        "source": "/v1/api/machine_info/attribute_options"
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "retailPrice",
+                                        "label": "零售价",
+                                        "step": 0.01
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "quantity",
+                                        "label": "库存数量",
+                                        "required": true,
+                                        "min": 1
+                                    },
+                                    {
+                                        "type": "textarea",
+                                        "name": "remark",
+                                        "label": "备注"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-eye",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "查看详情",
+                            "size": "lg",
+                            "body": {
+                                "type": "form",
+                                "initApi": "get:/v1/api/machine_info/",
+                                "controls": [
+                                    {
+                                        "type": "static",
+                                        "name": "machineNumber",
+                                        "label": "编号"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "machineName",
+                                        "label": "产品名称"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "warehouseName",
+                                        "label": "仓库名称"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "categoryName",
+                                        "label": "分类"
+                                    },
+                                    {
+                                        "type": "combo",
+                                        "name": "parts",
+                                        "label": "所需零件",
+                                        "multiple": true,
+                                        "addable": false,
+                                        "controls": [
+                                            {
+                                                "type": "static",
+                                                "name": "partName",
+                                                "label": "零件名称"
+                                            },
+                                            {
+                                                "type": "static",
+                                                "name": "quantity",
+                                                "label": "数量"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "installation",
+                                        "label": "安装方式"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "attributes",
+                                        "label": "属性"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "retailPrice",
+                                        "label": "零售价"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "remark",
+                                        "label": "备注"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "quantity",
+                                        "label": "库存数量"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-times text-danger",
+                        "actionType": "ajax",
+                        "confirmText": "您确认要删除?",
+                        "api": "delete:/v1/api/machine_info/$id"
+                    }
+                ]
+            }
+        ],
+        "footerToolbar": [
+            {
+                "type": "pagination",
+                "align": "right",
+                "pageSizes": [10, 20, 50, 100],
+                "showSizes": true,
+                "mode": "simple",
+                "total": "${total}"
+            }
+        ]
+    }
+}

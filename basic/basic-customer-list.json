@@ -1,0 +1,214 @@
+{
+  "type": "page",
+  "title": "客户列表",
+  "body": {
+    "type": "crud",
+    "api": "get:/v1/api/customer?page=${page}&perPage=${perPage}&keywords=${keywords}",
+    "syncLocation": false,
+    "perPage": 10,
+    "filter": {
+      "title": "条件搜索",
+      "controls": [
+        {
+          "type": "text",
+          "name": "keywords",
+          "label": "关键字"
+        }
+      ]
+    },
+    "headerToolbar": [
+      {
+        "type": "button",
+        "label": "刷新",
+        "level": "primary",
+        "actionType": "reload"
+      },
+      "bulkActions",
+      {
+        "type": "button",
+        "actionType": "dialog",
+        "label": "新增",
+        "icon": "fa fa-plus",
+        "primary": true,
+        "dialog": {
+          "title": "新增客户",
+          "body": {
+            "type": "form",
+            "api": "post:/v1/api/customer",
+            "controls": [
+              {
+                "type": "text",
+                "name": "customerNumber",
+                "label": "客户编号",
+                "required": true
+              },
+              {
+                "type": "text",
+                "name": "customerName",
+                "label": "公司名称",
+                "required": true
+              },
+              {
+                "type": "text",
+                "name": "contact",
+                "label": "联系人"
+              },
+              {
+                "type": "text",
+                "name": "phoneNumber",
+                "label": "手机号"
+              },
+              {
+                "type": "text",
+                "name": "taxNumber",
+                "label": "税号"
+              },
+              {
+                "type": "text",
+                "name": "address",
+                "label": "地址"
+              },
+              {
+                "type": "text",
+                "name": "shipmentVolume",
+                "label": "出货次数"
+              },
+              {
+                "type": "text",
+                "name": "note",
+                "label": "备注"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "columns": [
+      {
+        "name": "id",
+        "label": "序号",
+        "type": "text"
+      },
+      {
+        "name": "customerNumber",
+        "label": "客户编号",
+        "type": "text"
+      },
+      {
+        "name": "customerName",
+        "label": "客户名称",
+        "type": "text"
+      },
+      {
+        "name": "contact",
+        "label": "联系人",
+        "type": "text"
+      },
+      {
+        "name": "phoneNumber",
+        "label": "手机号",
+        "type": "text"
+      },
+      {
+        "name": "taxNumber",
+        "label": "税号",
+        "type": "text"
+      },
+      {
+        "name": "address",
+        "label": "地址",
+        "type": "text"
+      },
+      {
+        "name": "note",
+        "label": "备注",
+        "type": "text"
+      },
+      {
+        "type": "text",
+        "name": "shipmentVolume",
+        "label": "出货次数"
+      },
+      {
+        "type": "operation",
+        "label": "操作",
+        "buttons": [
+          {
+            "type": "button",
+            "icon": "fa fa-pencil",
+            "actionType": "dialog",
+            "dialog": {
+              "title": "编辑",
+              "body": {
+                "type": "form",
+                "name": "editForm",
+                "api": "put:/v1/api/customer/$id",
+                "controls": [
+                  {
+                    "type": "text",
+                    "name": "customerNumber",
+                    "label": "客户编号",
+                    "required": true
+                  },
+                  {
+                    "type": "text",
+                    "name": "customerName",
+                    "label": "客户名称",
+                    "required": true
+                  },
+                  {
+                    "type": "text",
+                    "name": "contact",
+                    "label": "联系人"
+                  },
+                  {
+                    "type": "text",
+                    "name": "phoneNumber",
+                    "label": "手机号"
+                  },
+                  {
+                    "type": "text",
+                    "name": "taxNumber",
+                    "label": "税号"
+                  },
+                  {
+                    "type": "text",
+                    "name": "address",
+                    "label": "地址"
+                  },
+                  {
+                    "type": "text",
+                    "name": "shipmentVolume",
+                    "label": "出货次数"
+                  },
+                  {
+                    "type": "text",
+                    "name": "note",
+                    "label": "备注"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "button",
+            "icon": "fa fa-times text-danger",
+            "actionType": "ajax",
+            "confirmText": "您确认要删除?",
+            "api": "delete:/v1/api/customer/$id"
+          }
+        ]
+      }
+    ],
+    "footerToolbar": [
+      {
+        "type": "pagination",
+        "align": "right",
+        "pageSizes": [10, 20, 50, 100],
+        "showSizes": true,
+        "mode": "simple",
+        "total": "${total}"
+      }
+    ]
+  }
+}

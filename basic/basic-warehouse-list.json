@@ -1,0 +1,154 @@
+{
+    "type": "page",
+    "title": "仓库列表",
+    "body": {
+        "type": "crud",
+        "api": "get:/v1/api/warehouse?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "syncLocation": false,
+        "perPage": 10,
+        "filter": {
+            "title": "条件搜索",
+            "controls": [
+                {
+                    "type": "text",
+                    "name": "keywords",
+                    "label": "关键字"
+                }
+            ]
+        },
+        "headerToolbar": [
+            {
+                "type": "button",
+                "label": "刷新",
+                "level": "primary",
+                "actionType": "reload"
+            },
+            "bulkActions",
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "新增",
+                "icon": "fa fa-plus",
+                "primary": true,
+                "dialog": {
+                    "title": "新增仓库",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/warehouse",
+                        "controls": [
+                            {
+                                "type": "text",
+                                "name": "warehouseNumber",
+                                "label": "仓库编号",
+                                "required": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "warehouseName",
+                                "label": "仓库名称",
+                                "required": true
+                            },
+                            {
+                                "type": "text",
+                                "name": "address",
+                                "label": "地址"
+                            },
+                            {
+                                "type": "text",
+                                "name": "note",
+                                "label": "备注"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "columns": [
+            {
+                "name": "id",
+                "label": "序号",
+                "type": "text"
+            },
+            {
+                "name": "warehouseNumber",
+                "label": "仓库编号",
+                "type": "text"
+            },
+            {
+                "name": "warehouseName",
+                "label": "仓库名称",
+                "type": "text"
+            },
+            {
+                "name": "address",
+                "label": "地址",
+                "type": "text"
+            },
+            {
+                "name": "note",
+                "label": "备注",
+                "type": "text"
+            },
+            {
+                "type": "operation",
+                "label": "操作",
+                "buttons": [
+                    {
+                        "type": "button",
+                        "icon": "fa fa-pencil",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "编辑",
+                            "body": {
+                                "type": "form",
+                                "name": "editForm",
+                                "api": "put:/v1/api/warehouse/$id",
+                                "controls": [
+                                    {
+                                        "type": "text",
+                                        "name": "warehouseNumber",
+                                        "label": "仓库编号",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "warehouseName",
+                                        "label": "仓库名称",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "address",
+                                        "label": "地址"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "note",
+                                        "label": "备注"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-times text-danger",
+                        "actionType": "ajax",
+                        "confirmText": "您确认要删除?",
+                        "api": "delete:/v1/api/warehouse/$id"
+                    }
+                ]
+            }
+        ],
+        "footerToolbar": [
+            {
+                "type": "pagination",
+                "align": "right",
+                "pageSizes": [10, 20, 50, 100],
+                "showSizes": true,
+                "mode": "simple",
+                "total": "${total}"
+            }
+        ]
+    }
+}

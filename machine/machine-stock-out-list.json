@@ -1,0 +1,422 @@
+{
+    "type": "page",
+    "title": "整机出库",
+    "body": {
+        "type": "crud",
+        "api": "get:/v1/api/machine_stock_out?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "syncLocation": false,
+        "perPage": 10,
+        "filter": {
+            "title": "条件搜索",
+            "controls": [
+                {
+                    "type": "text",
+                    "name": "keywords",
+                    "label": "关键字"
+                }
+            ]
+        },
+        "headerToolbar": [
+            {
+                "type": "button",
+                "label": "刷新",
+                "level": "primary",
+                "actionType": "reload"
+            },
+            "bulkActions",
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "新增",
+                "icon": "fa fa-plus",
+                "primary": true,
+                "dialog": {
+                    "title": "新增出库",
+                    "size": "lg",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/machine_stock_out",
+                        "controls": [
+                            {
+                                "type": "select",
+                                "name": "warehouseName",
+                                "label": "出库仓库",
+                                "required": true,
+                                "source": "/v1/api/get_name/warehouse_names"
+                            },
+                            {
+                                "type": "select",
+                                "name": "customerName",
+                                "label": "客户信息",
+                                "required": true,
+                                "source": "/v1/api/get_name/customer_names"
+                            },
+                            {
+                                "type": "combo",
+                                "name": "item",
+                                "label": "项目",
+                                "multiple": true,
+                                "controls": [
+                                    {
+                                        "type": "select",
+                                        "name": "categoryName",
+                                        "label": "分类",
+                                        "source": "/v1/api/get_name/machine_category_names",
+                                        "required": true,
+                                        "searchable": true
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "machineName",
+                                        "label": "产品型号",
+                                        "required": true,
+                                        "source": "/v1/api/get_name/machine_names",
+                                        "searchable": true
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "unit",
+                                        "label": "单位",
+                                        "required": true,
+                                        "value": "台",
+                                        "source": "/v1/api/get_name/unit_names",
+                                        "searchable": true
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "quantity",
+                                        "required": true,
+                                        "label": "数量"
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "unitPrice",
+                                        "required": true,
+                                        "label": "单价"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "number",
+                                "name": "totalAmount",
+                                "required": true,
+                                "label": "总金额"
+                            },
+                            {
+                                "type": "text",
+                                "name": "note",
+                                "label": "备注"
+                            },
+                            {
+                                "type": "textarea",
+                                "name": "salesDescription",
+                                "label": "销售说明",
+                                "value": "本公司专业生产10-35千伏负荷开关、真空断路器、隔离开关、接地开关、冷热缩电缆附件、欧美式电缆接头、电缆分支箱等系列产品。 公司地址：浙江省乐清市柳市镇花浃村 联系电话 ：15888444859"
+                            },
+                            {
+                                "type": "select",
+                                "name": "salesman",
+                                "label": "业务员",
+                                "source": "/v1/api/get_name/user_names"
+                            },
+                            {
+                                "type": "select",
+                                "name": "creator",
+                                "label": "制单",
+                                "source": "/v1/api/get_name/user_names"
+                            },
+                            {
+                                "type": "text",
+                                "name": "receiver",
+                                "label": "收货单位"
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "columns": [
+            {
+                "name": "id",
+                "label": "序号",
+                "type": "text"
+            },
+            {
+                "name": "stockOutNumber",
+                "label": "收支编号",
+                "type": "text"
+            },
+            {
+                "name": "date",
+                "label": "出库时间",
+                "type": "datetime"
+            },
+            {
+                "name": "warehouseName",
+                "label": "出库仓库",
+                "type": "text"
+            },
+            {
+                "name": "customerName",
+                "label": "客户信息",
+                "type": "text"
+            },
+            {
+                "name": "totalAmount",
+                "label": "总金额",
+                "type": "number"
+            },
+            {
+                "name": "note",
+                "label": "备注",
+                "type": "text"
+            },
+            {
+                "name": "salesDescription",
+                "label": "销售说明",
+                "type": "text"
+            },
+            {
+                "name": "salesman",
+                "label": "业务员",
+                "type": "text"
+            },
+            {
+                "name": "creator",
+                "label": "制单",
+                "type": "text"
+            },
+            {
+                "name": "receiver",
+                "label": "收货单位",
+                "type": "text"
+            },
+            {
+                "type": "operation",
+                "label": "操作",
+                "buttons": [
+                    {
+                        "type": "button",
+                        "icon": "fa fa-pencil",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "编辑",
+                            "size": "lg",
+                            "body": {
+                                "type": "form",
+                                "name": "editForm",
+                                "api": "put:/v1/api/machine_stock_out/$id",
+                                "controls": [
+                                    {
+                                        "type": "select",
+                                        "name": "warehouseName",
+                                        "label": "出库仓库",
+                                        "required": true,
+                                        "source": "/v1/api/get_name/warehouse_names"
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "customerName",
+                                        "label": "客户信息",
+                                        "required": true,
+                                        "source": "/v1/api/get_name/customer_names"
+                                    },
+                                    {
+                                        "type": "combo",
+                                        "name": "item",
+                                        "label": "项目",
+                                        "multiple": true,
+                                        "controls": [
+                                            {
+                                                "type": "select",
+                                                "name": "categoryName",
+                                                "label": "分类",
+                                                "source": "/v1/api/get_name/machine_category_names",
+                                                "required": true,
+                                                "searchable": true
+                                            },
+                                            {
+                                                "type": "select",
+                                                "name": "machineName",
+                                                "label": "产品型号",
+                                                "required": true,
+                                                "source": "/v1/api/get_name/machine_names",
+                                                "searchable": true
+                                            },
+                                            {
+                                                "type": "select",
+                                                "name": "unit",
+                                                "label": "单位",
+                                                "required": true,
+                                                "value": "台",
+                                                "source": "/v1/api/get_name/unit_names",
+                                                "searchable": true
+                                            },
+                                            {
+                                                "type": "number",
+                                                "name": "quantity",
+                                                "required": true,
+                                                "label": "数量"
+                                            },
+                                            {
+                                                "type": "number",
+                                                "name": "unitPrice",
+                                                "required": true,
+                                                "label": "单价"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "totalAmount",
+                                        "required": true,
+                                        "label": "总金额"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "note",
+                                        "label": "备注"
+                                    },
+                                    {
+                                        "type": "textarea",
+                                        "name": "salesDescription",
+                                        "label": "销售说明"
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "salesman",
+                                        "label": "业务员",
+                                        "source": "/v1/api/get_name/user_names"
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "creator",
+                                        "label": "制单",
+                                        "source": "/v1/api/get_name/user_names"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "name": "receiver",
+                                        "label": "收货单位"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-times text-danger",
+                        "actionType": "ajax",
+                        "confirmText": "您确认要删除?",
+                        "api": "delete:/v1/api/machine_stock_out/$id"
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-eye",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "查看",
+                            "size": "lg",
+                            "body": {
+                                "type": "form",
+                                "body": [
+                                    {
+                                        "type": "static",
+                                        "name": "warehouseName",
+                                        "label": "出库仓库"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "customerName",
+                                        "label": "客户信息"
+                                    },
+                                    {
+                                        "type": "combo",
+                                        "name": "item",
+                                        "label": "项目",
+                                        "multiple": true,
+                                        "addable": false,
+                                        "controls": [
+                                            {
+                                                "type": "static",
+                                                "name": "categoryName",
+                                                "label": "分类"
+                                            },
+                                            {
+                                                "type": "static",
+                                                "name": "machineName",
+                                                "label": "产品型号"
+                                            },
+                                            {
+                                                "type": "static",
+                                                "name": "unit",
+                                                "label": "单位"
+                                            },
+                                            {
+                                                "type": "static",
+                                                "name": "quantity",
+                                                "label": "数量"
+                                            },
+                                            {
+                                                "type": "static",
+                                                "name": "unitPrice",
+                                                "label": "单价"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "totalAmount",
+                                        "label": "总金额"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "note",
+                                        "label": "备注"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "salesDescription",
+                                        "label": "销售说明"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "salesman",
+                                        "label": "业务员"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "creator",
+                                        "label": "制单"
+                                    },
+                                    {
+                                        "type": "static",
+                                        "name": "receiver",
+                                        "label": "收货单位"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "label": "导出送货单",
+                        "actionType": "url",
+                        "url": "/ext/machine_stock_out/export/$stockOutNumber",
+                        "blank": true
+                    }
+                ]
+            }
+        ],
+        "footerToolbar": [
+            {
+                "type": "pagination",
+                "align": "right",
+                "pageSizes": [10, 20, 50, 100],
+                "showSizes": true,
+                "mode": "simple",
+                "total": "${total}"
+            }
+        ]
+    }
+}

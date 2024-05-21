@@ -1,0 +1,190 @@
+{
+    "type": "page",
+    "title": "收支列表",
+    "body": {
+        "type": "crud",
+        "api": "get:/v1/api/finance?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "syncLocation": false,
+        "perPage": 10,
+        "filter": {
+            "title": "条件搜索",
+            "controls": [
+                {
+                    "type": "text",
+                    "name": "keywords",
+                    "label": "关键字"
+                }
+            ]
+        },
+        "headerToolbar": [
+            {
+                "type": "button",
+                "label": "刷新",
+                "level": "primary",
+                "actionType": "reload"
+            },
+            "bulkActions",
+            {
+                "type": "button",
+                "actionType": "dialog",
+                "label": "手工新增",
+                "icon": "fa fa-plus",
+                "primary": true,
+                "dialog": {
+                    "title": "新增收支",
+                    "body": {
+                        "type": "form",
+                        "api": "post:/v1/api/finance",
+                        "controls": [
+                            {
+                                "type": "text",
+                                "name": "financeItem",
+                                "label": "收支项目",
+                                "required": true
+                            },
+                            {
+                                "type": "select",
+                                "name": "type",
+                                "label": "收支类型",
+                                "required": true,
+                                "options": [
+                                    {
+                                        "label": "收入",
+                                        "value": "收入"
+                                    },
+                                    {
+                                        "label": "支出",
+                                        "value": "支出"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "number",
+                                "name": "amount",
+                                "label": "金额",
+                                "required": true,
+                                "step": 0.01
+                            },
+                            {
+                                "type": "textarea",
+                                "name": "note",
+                                "label": "备注",
+                                "required": false
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "columns": [
+            {
+                "name": "id",
+                "label": "序号",
+                "type": "text"
+            },
+            {
+                "name": "financeNumber",
+                "label": "编号",
+                "type": "text"
+            },
+            {
+                "name": "date",
+                "label": "日期",
+                "type": "text"
+            },
+            {
+                "name": "financeItem",
+                "label": "收支项目",
+                "type": "text"
+            },
+            {
+                "name": "type",
+                "label": "收支类型",
+                "type": "text"
+            },
+            {
+                "name": "amount",
+                "label": "金额",
+                "type": "text"
+            },
+            {
+                "name": "note",
+                "label": "备注",
+                "type": "text"
+            },
+            {
+                "type": "operation",
+                "label": "操作",
+                "buttons": [
+                    {
+                        "type": "button",
+                        "icon": "fa fa-pencil",
+                        "actionType": "dialog",
+                        "dialog": {
+                            "title": "编辑",
+                            "body": {
+                                "type": "form",
+                                "name": "editForm",
+                                "api": "put:/v1/api/finance/$id",
+                                "controls": [
+                                    {
+                                        "type": "text",
+                                        "name": "financeItem",
+                                        "label": "收支项目",
+                                        "required": true
+                                    },
+                                    {
+                                        "type": "select",
+                                        "name": "type",
+                                        "label": "收支类型",
+                                        "required": true,
+                                        "options": [
+                                            {
+                                                "label": "收入",
+                                                "value": "收入"
+                                            },
+                                            {
+                                                "label": "支出",
+                                                "value": "支出"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "number",
+                                        "name": "amount",
+                                        "label": "金额",
+                                        "required": true,
+                                        "step": 0.01
+                                    },
+                                    {
+                                        "type": "textarea",
+                                        "name": "note",
+                                        "label": "备注",
+                                        "required": false
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "icon": "fa fa-times text-danger",
+                        "actionType": "ajax",
+                        "confirmText": "您确认要删除?",
+                        "api": "delete:/v1/api/finance/$id"
+                    }
+                ]
+            }
+        ],
+        "footerToolbar": [
+            {
+                "type": "pagination",
+                "align": "right",
+                "pageSizes": [10, 20, 50, 100],
+                "showSizes": true,
+                "mode": "simple",
+                "total": "${total}"
+            }
+        ]
+    }
+}
